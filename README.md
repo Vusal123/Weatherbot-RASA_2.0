@@ -152,4 +152,4 @@ ngrok http 5005
 ```
 By that you will get details of the new ngrok session. Take https address in the session and update you telegram ```webhook_url```  credential in ```credentials.yml``` file.
 
-Terminate previous rasa run by ```CTRL + C``` and run again with above given command. Now, you are good to test your bot on telegram.
+Terminate previous rasa run by ```CTRL + C``` and run again with above given command. Now, you are good to test your bot on Telegram.
