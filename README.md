@@ -51,7 +51,7 @@ The user intents, stories and rules are used for training the NLP model. These i
  
 Before installation make sure that you have correct Python version as Rasa 2.X.X requires Python 3.6, 3.7 or 3.8.
 
-### pip & Rasa
+### Install Rasa
 
 Below are the simple steps for creating a virtual environment on Windows and installing Rasa Open Source 2.0. If PATH and PATHEXT variables are already configured for your Python installation:
 
