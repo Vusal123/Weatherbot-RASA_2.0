@@ -1,0 +1,48 @@
+version: "2.0"
+
+stories:
+- story: Happy path for weather request with greeting
+  steps:
+  - intent: greet
+  - action: utter_weather_greet
+  - intent: affirm
+  - action: weather_details_form
+  - active_loop: weather_details_form
+
+
+- story: Happy path for weather request  with direct request
+  steps:
+  - intent: weather_condition
+  - action: utter_pleasure
+  - action: weather_details_form
+  - active_loop: weather_details_form
+
+- story: happy path for weather request with time input
+  steps:
+  - intent: weather_time
+    entities:
+    - time: '2021-05-15T00:00:00.000-07:00'
+  - slot_was_set:
+    - time: '2021-05-15T00:00:00.000-07:00'
+  - action: weather_details_form
+  - active_loop: weather_details_form
+
+- story: happy path for weather request with city input
+  steps:
+  - intent: weather_city
+    entities:
+    - city: 'Baku'
+  - slot_was_set:
+    - time: 'Baku'
+  - action: weather_details_form
+  - active_loop: weather_details_form
+
+
+- story: Unhappy path for weather request with greeting
+  steps:
+  - intent: greet
+  - action: utter_weather_greet
+  - intent: deny
+  - action: utter_unhappy
+  - action: action_chat_restart
+

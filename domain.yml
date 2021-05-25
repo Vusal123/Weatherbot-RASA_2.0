@@ -1,0 +1,75 @@
+version: '2.0'
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet
+- bot_challenge
+- deny
+- affirm
+- weather_city:
+    use_entities:
+    - city
+- stop
+- weather_time:
+    use_entities:
+    - time
+- appreciate
+- goodbye
+- weather_condition
+- out_of_scope
+entities:
+- city
+- time
+slots:
+  city:
+    type: text
+    influence_conversation: true
+  time:
+    type: any
+    influence_conversation: false
+responses:
+  utter_happy:
+  - text: Great, carry on!
+  utter_unhappy:
+  - text: Ok, as you wish.
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_weather_greet:
+  - text: Hi. I am weatherbot. Do you want to learn the weather condition?
+  utter_ask_city:
+  - text: Please provide the city name
+  utter_ask_time:
+  - text: Please provide the date
+  utter_results:
+  - text: |-
+      Thanks for providing the data. 
+  utter_weather_condition:
+  - text: '{Weather_Condition}'
+  utter_out_of_scope:
+  - text: Sorry, I can't handle that request.
+  utter_pleasure:
+  - text: With a great pleasure...
+  utter_ask_continue:
+  - text: Do you want to proceed?
+actions:
+- action_slot_reset
+- action_submit
+- action_weather_api
+- utter_ask_continue
+- utter_happy
+- utter_unhappy
+- utter_weather_greet
+- action_chat_restart
+forms:
+  weather_details_form:
+    required_slots:
+      city:
+      - type: from_entity
+        entity: city
+      time:
+      - type: from_entity
+        entity: time
+
