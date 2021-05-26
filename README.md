@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a chatbot that can help you tell the weather for any city and date which can be integrated to different platforms where messaging functionality is available. In this project example of telegram integration ia vailable. 
+This is a chatbot that can help you tell the weather for any city and date which can be integrated to different platforms where messaging functionality is available. In this project example of telegram integration is available. 
 
 
 ## Weather data
