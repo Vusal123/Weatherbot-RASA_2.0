@@ -2,8 +2,8 @@ import requests
 from datetime import datetime, timedelta
 
 def Weather(city,time): 
-    print(city)
-    print(time)
+    print(city) #to see provided city data in command prompt
+    print(time) #to see provided time data in command prompt
     degree_sign = u"\N{DEGREE SIGN}"
     api_key = "5e400ebbd6554a6f9b194637210705"
     api_address='http://api.weatherapi.com/v1/forecast.json?key=' + api_key + '&q='
@@ -17,9 +17,11 @@ def Weather(city,time):
     url = api_address + city_result +'&days=3&aqi=no&alerts=no'
     json_data = dict(requests.get(url).json())
 
+    #for the cases of not found city name"
     if 'error' in json_data:
         return 'Either the city name that you provided does not exist, or I did not understand you properly. Please start the query again and make sure that you have correct inputs'
     
+    #time data is type dict
     if type(time)==dict:
         end = datetime(int(time['to'][:4]),int(time['to'][5:7]),int(time['to'][8:10]))
         start = datetime(int(time['from'][:4]),int(time['from'][5:7]),int(time['from'][8:10]))
@@ -41,6 +43,8 @@ def Weather(city,time):
                     all_days = all_days + '\nSorry, I am not able to provide the weather condition for other requested days. I can provide only for today and next two days'
                 break
         return all_days
+
+    #time data is is type list
     elif type(time)==list:
         all_days ='Weather condition for ' + city_result
         not_found_days = ''
@@ -56,7 +60,9 @@ def Weather(city,time):
                 not_found_days = not_found_days + '\n' + required_date
         if not_found_days != '':
             all_days = all_days + '\n' + 'I am able to provide weather condition only for today and the next two days. Sorry, I cannot provide weather condition for below requested dates:' + not_found_days
-        return all_days    
+        return all_days  
+
+    #time data is type str
     else:
         date_found = False    
         for i in json_data['forecast']['forecastday']:
