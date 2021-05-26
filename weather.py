@@ -5,7 +5,8 @@ def Weather(city,time):
     print(city)
     print(time)
     degree_sign = u"\N{DEGREE SIGN}"
-    api_address='http://api.weatherapi.com/v1/forecast.json?key=5e400ebbd6554a6f9b194637210705&q='
+    api_key = "5e400ebbd6554a6f9b194637210705"
+    api_address='http://api.weatherapi.com/v1/forecast.json?key=' + api_key + '&q='
     
     city_result = ''
     if type(city)==list:
@@ -15,6 +16,9 @@ def Weather(city,time):
         
     url = api_address + city_result +'&days=3&aqi=no&alerts=no'
     json_data = dict(requests.get(url).json())
+
+    if 'error' in json_data:
+        return 'Either the city name that you provided does not exist, or I did not understand you properly. Please start the query again and make sure that you have correct inputs'
     
     if type(time)==dict:
         end = datetime(int(time['to'][:4]),int(time['to'][5:7]),int(time['to'][8:10]))
@@ -37,6 +41,22 @@ def Weather(city,time):
                     all_days = all_days + '\nSorry, I am not able to provide the weather condition for other requested days. I can provide only for today and next two days'
                 break
         return all_days
+    elif type(time)==list:
+        all_days ='Weather condition for ' + city_result
+        not_found_days = ''
+        for t in time:
+            date_found = False
+            required_date = str(t)[:10]
+            for d in json_data['forecast']['forecastday']:
+                if d['date']==required_date:
+                    date_found=True
+                    result = '  - max temp: ' + str(d['day']['maxtemp_c'])+ degree_sign + 'C\n  - min temp: ' + str(d['day']['mintemp_c'])+ degree_sign + 'C\n  - Expected Condition:' + d['day']['condition']['text']
+                    all_days = all_days + '\n* ' + d['date'] +':\n' + result
+            if date_found == False:
+                not_found_days = not_found_days + '\n' + required_date
+        if not_found_days != '':
+            all_days = all_days + '\n' + 'I am able to provide weather condition only for today and the next two days. Sorry, I cannot provide weather condition for below requested dates:' + not_found_days
+        return all_days    
     else:
         date_found = False    
         for i in json_data['forecast']['forecastday']:
