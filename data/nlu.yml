@@ -119,6 +119,7 @@ nlu:
     - What is capital city of Uganda
     - Where can I order pizza
     - How are you?
+    - What is difference between bunny and rabbit 
 - intent: weather_condition
   examples: |
     - Please provide weather condition
